@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
+import ContentBox from "./component/ContentBox";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state={
+            tweets: ['a', 'b', 'c', 'd', 'e', 'f']
+        }
+    }
+
+    deleteTweets(index){
+        console.log("?? ", index);
+        const newTweets = this.state.tweets.filter((tweet, idx) => idx != index);
+        console.log("?? ", newTweets);
+        this.setState({tweets: newTweets});
+    }
+
+
+    render(){
+        const {tweets} = this.state;
+        console.log("RENDER", tweets);
+        return(
+            <div>
+                {tweets.map((tweet, idx) => (
+                    <ContentBox tweetId={idx} name={tweet} key={idx} closeBtn={()=>this.deleteTweets(idx)}/>
+                ))}
+            </div>
+        )
+    }
 }
 
 export default App;
